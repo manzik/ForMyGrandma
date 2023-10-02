@@ -9,8 +9,7 @@ const MAX_UNDO = 6;
 window.addEventListener("load", () => {
   table = document.getElementsByTagName("table")[0];
   resizeTable();
-
-  window.addEventListener("click", e => {
+  window.addEventListener("mousedown", e => {
     // check if it's in the table
     let target = e.target;
     while (target && target !== table) {
@@ -21,22 +20,11 @@ window.addEventListener("load", () => {
     }
     target = e.target;
     if (target.tagName === "TD") {
-      
       if (target.style.backgroundColor !== "rgb(255, 255, 255)") {
         target.style.backgroundColor = "rgb(255, 255, 255)";
       } else if (target.style.backgroundColor !== document.getElementById("color").value) {
         target.style.backgroundColor = document.getElementById("color").value;
       }
-    }
-  });
-  window.addEventListener("mousedown", e => {
-    // check if it's in the table
-    let target = e.target;
-    while (target && target !== table) {
-      target = target.parentNode;
-    }
-    if (target === table) {
-      e.preventDefault();
     }
     mouseIsDown = true;
   });
