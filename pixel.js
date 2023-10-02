@@ -17,8 +17,6 @@ let beginDraw = () => {
 
         cell.addEventListener('mousedown',event => {
             isDrawing = true;
-            console.log(cell);
-            console.log(cells.length);
             modColor(cell,myColor);
         });
 
@@ -47,7 +45,10 @@ let colorCollector = () =>
 
 /* change color of cell based on input */
 let modColor = (loc,clr) => {
+  console.log(clr, loc.style.backgroundColor);
+  if (clr != loc.style.backgroundColor) {
     loc.style.backgroundColor = clr;
+  }
 }
 
 /* helper to grab current color value */
@@ -161,7 +162,6 @@ let i = 0;
 
 /* gather array of all cells */
 const cells = document.getElementsByTagName("TD");
-console.log(cells);
 
 /* listen for mouse event */
 document.onmousemove = function(){
