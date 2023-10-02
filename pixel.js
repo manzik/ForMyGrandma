@@ -9,6 +9,30 @@ const MAX_UNDO = 6;
 window.addEventListener("load", () => {
   table = document.getElementsByTagName("table")[0];
   resizeTable();
+
+  const colorCell = target => {
+    if (target.tagName === "TD") {
+      if (target.style.backgroundColor !== document.getElementById("color").value) {
+        currentChange.push({
+          element: target,
+          color: target.style.backgroundColor
+        });
+        target.style.backgroundColor = document.getElementById("color").value;
+      }
+    }
+  };
+
+  window.addEventListener("click", e => {
+    // check if it's in the table
+    let target = e.target;
+    while (target && target !== table) {
+      target = target.parentNode;
+    }
+    if (target === table) {
+      e.preventDefault();
+    }
+    colorCell(e.target);
+  });
   window.addEventListener("mousedown", e => {
     // check if it's in the table
     let target = e.target;
@@ -33,15 +57,7 @@ window.addEventListener("load", () => {
   window.addEventListener("mousemove", (event) => {
     if (mouseIsDown) {
       let target = event.target;
-      if (target.tagName === "TD") {
-        if (target.style.backgroundColor !== document.getElementById("color").value) {
-          currentChange.push({
-            element: target,
-            color: target.style.backgroundColor
-          });
-          target.style.backgroundColor = document.getElementById("color").value;
-        }
-      }
+      colorCell(target);
     }
   });
 });
