@@ -55,6 +55,10 @@ window.addEventListener("load", () => {
       let target = event.target;
       if (target.tagName === "TD") {
         if (target.style.backgroundColor !== document.getElementById("color").value) {
+          currentChange.push({
+            element: target,
+            color: target.style.backgroundColor
+          });
           target.style.backgroundColor = document.getElementById("color").value;
         }
       }
@@ -116,17 +120,22 @@ function resizeTable() {
   }
 }
 
+function tableTo2dArray() {
+  let colors = [];
+  for(let i = 0; i < table.rows.length; i++) {
+    colors[i] = [];
+    for(let j = 0; j < table.rows[i].cells.length; j++) {
+      colors[i][j] = table.rows[i].cells[j].style.backgroundColor;
+    }
+  }
+  return colors;
+}
+
 function saveFile() {
   let data = {};
   data.rows = table.rows.length;
   data.columns = table.rows[0].cells.length;
-  data.colors = [];
-  for(let i = 0; i < table.rows.length; i++) {
-    data.colors[i] = [];
-    for(let j = 0; j < table.rows[i].cells.length; j++) {
-      data.colors[i][j] = table.rows[i].cells[j].style.backgroundColor;
-    }
-  }
+  data.colors = tableTo2dArray();
   let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
   let downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute("href", dataStr);
@@ -158,4 +167,58 @@ function loadFile() {
     }
   }
   input.click();
+}
+
+function center() {
+  let colors = tableTo2dArray();
+  let rows = parseInt(document.getElementById("table-rows").value, 10);
+  let columns = parseInt(document.getElementById("table-columns").value, 10);
+  
+
+  // Step 1: Find the bounding box of the colored object.
+  let minRow = rows, maxRow = -1, minCol = columns, maxCol = -1;
+
+  for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < columns; c++) {
+          if (colors[r][c] !== "rgb(255, 255, 255)") {
+              minRow = Math.min(minRow, r);
+              maxRow = Math.max(maxRow, r);
+              minCol = Math.min(minCol, c);
+              maxCol = Math.max(maxCol, c);
+          }
+      }
+  }
+
+  // Step 2: Find the center of the bounding box.
+  let boxCenterRow = Math.floor((minRow + maxRow) / 2);
+  let boxCenterCol = Math.floor((minCol + maxCol) / 2);
+
+  // Step 3: Calculate the displacement needed.
+  let rowDisplacement = Math.floor(rows / 2) - boxCenterRow;
+  let colDisplacement = Math.floor(columns / 2) - boxCenterCol;
+
+  // Step 4: Create a new array with the colored object at the center.
+  let newColors = Array.from({ length: rows }, () => Array(columns).fill("rgb(255, 255, 255)"));
+
+  for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < columns; c++) {
+          let newRow = r + rowDisplacement;
+          let newCol = c + colDisplacement;
+
+          if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns) {
+              newColors[newRow][newCol] = colors[r][c];
+          }
+      }
+  }
+
+  colors = newColors;  // Assigning the re-centered array back to `colors`
+
+
+  for(let i = 0; i < table.rows.length; i++) {
+    for(let j = 0; j < table.rows[i].cells.length; j++) {
+      table.rows[i].cells[j].style.backgroundColor = newColors[i][j];
+    }
+  }
+
+  changes = [];
 }
