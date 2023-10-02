@@ -43,6 +43,10 @@ select {
     
 }
 
+* {
+    -webkit-user-drag: none;
+}
+
 
 /* Change the color of links on hover */
 button:hover {
@@ -91,6 +95,7 @@ body {
 h1 {
     font-size: 2.8em; 
     font-weight: 700; 
+    font-family: "comic sans ms", sans-serif;
 }
 
 h2 {

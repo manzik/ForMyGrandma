@@ -17,18 +17,18 @@
     </div>
     <h1>Cats Love to Knit</h1>
     <h2>by grandma's husband</h2>
+    <img src="cute-cat-2.gif" width="200" height="200" style="margin-top: -20px; margin-bottom: -60px;" />
 
     <div id="outTable">
         <div id="buttonContainer"> 
-            <button onclick="addColumn()"id="addColumn">ADD COLUMN</button>
-            <button onclick="deleteColumn()"id="deleteColumn">DELETE COLUMN</button> 
-            <button onclick="addRow()"id ="addRow">ADD ROW</button>
-            <button onclick="deleteRow()"id ="deleteRow">DELETE ROW</button> 
-            <button onclick="allColor('gainsboro')"id = "resetColor">RESET COLOR</button>
-            <button onclick="allColorHelper()"id = "fillColor">COLOR ALL</button>
-            <button onclick="remColorHelper()"id = "remColor">COLOR REMAINING</button>
+            <label>Rows: <input type="number" value="50" id="table-rows" onchange="resizeTable()" /></label>
+            <label>Columns: <input type="number" value="50" id="table-columns" onchange="resizeTable()" /></label>
+            <button onclick="undo()">Undo</button>
+            <button onclick="loadFile()">Load File</button>
+            <button onclick="saveFile()">Save File</button>
             <select onclick="colorCollector()" id="color">
               <option value="rgb(0, 0, 0)">Black</option>
+              <option value="rgb(255, 255, 255)">Erase</option>
               <option value="rgb(255, 0, 0)">Red</option>
               <option value="rgb(255, 140, 0)">Orange</option>
               <option value="rgb(255, 255, 0)">Yellow</option>
@@ -36,7 +36,6 @@
               <option value="rgb(0, 0, 255)">Blue</option>
               <option value="rgb(128, 0, 128)">Purple</option>
               <option value="rgb(255, 20, 147)">Pink</option>
-              <option value="rgb(255, 255, 255)">White</option>
           </select>          
         </div>
 
