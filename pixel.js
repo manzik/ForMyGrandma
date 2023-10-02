@@ -23,6 +23,10 @@ window.addEventListener("load", () => {
       if (target.style.backgroundColor !== "rgb(255, 255, 255)") {
         target.style.backgroundColor = "rgb(255, 255, 255)";
       } else if (target.style.backgroundColor !== document.getElementById("color").value) {
+        currentChange.push({
+          element: target,
+          color: target.style.backgroundColor
+        });
         target.style.backgroundColor = document.getElementById("color").value;
       }
     }
