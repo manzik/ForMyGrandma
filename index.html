@@ -5,13 +5,18 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="left-rows.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="right-rows.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="top-columns.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="bottom-columns.css">
   </head>
 
   <body>
-    <h1>Pixel Art Editor</h1>
-    <h2>by <a href="https://github.com/sdhani">Shania Dhani</a>, 
-           <a href="https://github.com/LawrenceCastillo">Lawrence Castillo</a>, 
-           <a href="https://github.com/ShainaLowenthal">Shaina Lowenthal</a></h2>
+    <div class="cute-cat">
+      
+    </div>
+    <h1>Cats Love to Knit</h1>
+    <h2>by grandma's husband</h2>
 
     <div id="outTable">
         <div id="buttonContainer"> 
@@ -23,6 +28,7 @@
             <button onclick="allColorHelper()"id = "fillColor">COLOR ALL</button>
             <button onclick="remColorHelper()"id = "remColor">COLOR REMAINING</button>
             <select onclick ="colorCollector()" id = "color">
+              <option  value = "#000000"> Black</option>
                 <option  value = "#FF0000"> Red</option>
                 <option  value = "#FF8C00"> Orange</option>
                 <option  value = "#FFFF00"> Yellow</option>
@@ -31,7 +37,6 @@
                 <option value = "#800080"> Purple</option>
                 <option  value = "#FF1493"> Pink</option>
                 <option  value = "#FFFFFF"> White</option>
-                <option  value = "#000000"> Black</option>
             </select>
         </div>
 
