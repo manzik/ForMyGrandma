@@ -9,7 +9,7 @@ const MAX_UNDO = 6;
 window.addEventListener("load", () => {
   table = document.getElementsByTagName("table")[0];
   resizeTable();
-  window.addEventListener("mousedown", e => {
+  const onDown = e => {
     // check if it's in the table
     let target = e.target;
     while (target && target !== table) {
@@ -31,8 +31,11 @@ window.addEventListener("load", () => {
       }
     }
     mouseIsDown = true;
-  });
-  window.addEventListener("mouseup", () => {
+  };
+  window.addEventListener("mousedown", onDown);
+  window.addEventListener("touchstart", onDown);
+
+  const onUp = () => {
     if (currentChange.length) {
       while (changes.length > MAX_UNDO) {
         changes.shift();
@@ -41,8 +44,11 @@ window.addEventListener("load", () => {
       currentChange = [];
     }
     mouseIsDown = false;
-  });
-  window.addEventListener("mousemove", (event) => {
+  };
+  window.addEventListener("mouseup", onUp);
+  window.addEventListener("touchend", onUp);
+  
+  const onMove = (event) => {
     if (mouseIsDown) {
       let target = event.target;
       if (target.tagName === "TD") {
@@ -55,7 +61,9 @@ window.addEventListener("load", () => {
         }
       }
     }
-  });
+  };
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("touchmove", onMove);
 });
 
 function undo() {
