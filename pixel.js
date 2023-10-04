@@ -49,9 +49,9 @@ window.addEventListener("load", () => {
   window.addEventListener("touchend", onUp);
   
   const onMove = (event) => {
-    if (mouseIsDown) {
-      let target = event.target;
-      if (target.tagName === "TD") {
+    let target = event.target;
+    if (target.tagName === "TD") {
+      if (mouseIsDown) {
         if (target.style.backgroundColor !== document.getElementById("color").value) {
           currentChange.push({
             element: target,
@@ -60,15 +60,15 @@ window.addEventListener("load", () => {
           target.style.backgroundColor = document.getElementById("color").value;
         }
       }
+      document.getElementById("row-col").innerHTML = `Row: ${target.parentNode.rowIndex + 1}, Column: ${target.cellIndex + 1}`;
     }
-  };
+  }
   window.addEventListener("mousemove", onMove);
   window.addEventListener("touchmove", onMove);
 });
 
 function undo() {
   let change = changes.pop();
-  console.log(change);
   if (change) {
     for(let i = 0; i < change.length; i++) {
       change[i].element.style.backgroundColor = change[i].color;
